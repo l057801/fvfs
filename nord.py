@@ -23,8 +23,11 @@ def connectVPN(country):
     out = subprocess.call(['nordvpn','connect',country])
 
 
-def randomizeNord():
-    timeOfChanges = int(input('Time in seconds between VPN changes: '))
+def randomizeNord(seconds=0):
+    if seconds == 0:
+        timeOfChanges = int(input('Time in seconds between VPN changes: '))
+    else:
+        timeOfChanges = seconds
     subprocess.call(['nordvpn','connect'])
     while True:
         time.sleep(timeOfChanges)
@@ -39,6 +42,14 @@ def randomizeNord():
         print(f"Previously connected to {status['Country']}")
         print(f'Switching to {countryRandom}')
         connectVPN(countryRandom)
+
+def randNordNow():
+        countries = ['Denmark', 'United_Kingdom', 'Sweden', 'Spain', 'Finland', 'Ireland', 'Croatia', 'France', 'Austria', 'Hungary', 'Latvia', 'Lithuania', 'Germany', 'Portugal', 'Poland']
+        countryRandom = random.choice(countries)
+        print(f'Switching to {countryRandom}')
+        connectVPN(countryRandom)
+        return countryRandom
+
 
 if __name__ == '__main__':
     randomizeNord()
